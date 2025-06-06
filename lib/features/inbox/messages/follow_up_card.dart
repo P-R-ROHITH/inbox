@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class FollowUpPage extends StatefulWidget {
   const FollowUpPage({super.key});
@@ -536,8 +537,8 @@ class _FollowUpCardState extends State<FollowUpCard> {
                         setState(() {
                           isBooking = true;
                         });
-                        // Simulate booking delay
-                        await Future.delayed(const Duration(seconds: 1));
+                        await showSuccessAnimation(context);
+                        await Future.delayed(const Duration(milliseconds: 400));
                         setState(() {
                           isBooking = false;
                           booked = true;
@@ -576,4 +577,50 @@ class _FollowUpCardState extends State<FollowUpCard> {
       ),
     );
   }
+}
+
+Future<void> showSuccessAnimation(BuildContext context) async {
+  await showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (context) => Container(
+      color: const Color(0xFF2563EB), // Solid blue background
+      child: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Lottie.asset(
+              'assets/animations/success.json',
+              repeat: false,
+              width: 200,
+              height: 200,
+              delegates: LottieDelegates(
+                values: [
+                  ValueDelegate.color(
+                    const ['Checkmark'], // Replace with your actual layer name if needed
+                    value: const Color(0xFFFFFFFF), // White checkmark for contrast
+                  ),
+                ],
+              ),
+              onLoaded: (composition) {
+                Future.delayed(composition.duration, () {
+                  Navigator.of(context).pop();
+                });
+              },
+            ),
+            const SizedBox(height: 24),
+            const Text(
+              "Success",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 1.2,
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
 }
