@@ -93,13 +93,13 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
       appBar: ChatAppBar(
         facilityName: widget.facilityName,
         profilePicture: widget.profilePicture,
-        address: "123 Medical Street, City", // or your dynamic address
+        address: "123 Medical Street, City",
         onCallPressed: () {
           // Handle call action
         },
-        onMenuPressed: () {
-          // Handle menu action
-        },
+        // onMenuPressed: () { // Uncomment and use if ChatAppBar has this parameter
+        //   // Handle menu action
+        // },
       ),
       body: ChatBackground(
         child: Padding(

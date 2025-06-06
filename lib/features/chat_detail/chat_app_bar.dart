@@ -5,7 +5,6 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String profilePicture;
   final String address;
   final VoidCallback? onCallPressed;
-  final VoidCallback? onMenuPressed;
 
   const ChatAppBar({
     super.key,
@@ -13,7 +12,6 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
     required this.profilePicture,
     required this.address,
     this.onCallPressed,
-    this.onMenuPressed,
   });
 
   @override
@@ -55,9 +53,26 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
           icon: const Icon(Icons.call, color: Color(0xFF2563EB), size: 22),
           onPressed: onCallPressed,
         ),
-        IconButton(
-          icon: const Icon(Icons.more_vert, size: 22),
-          onPressed: onMenuPressed,
+        PopupMenuButton<String>(
+          icon: const Icon(Icons.more_vert),
+          onSelected: (value) {
+            // Handle menu option selection
+            if (value == 'settings') {
+              // Navigate to settings
+            } else if (value == 'help') {
+              // Show help
+            }
+          },
+          itemBuilder: (context) => [
+            const PopupMenuItem(
+              value: 'settings',
+              child: Text('Settings'),
+            ),
+            const PopupMenuItem(
+              value: 'help',
+              child: Text('Help'),
+            ),
+          ],
         ),
       ],
       elevation: 0,
