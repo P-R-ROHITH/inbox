@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String facilityName;
   final String profilePicture;
   final String address;
-  final VoidCallback? onCallPressed;
+  final String phoneNumber; // Add this
 
   const ChatAppBar({
     super.key,
     required this.facilityName,
     required this.profilePicture,
     required this.address,
-    this.onCallPressed,
+    required this.phoneNumber, // Add this
   });
+
+  Future<void> _launchDialer() async {
+    final Uri url = Uri(scheme: 'tel', path: phoneNumber);
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +59,7 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         IconButton(
           icon: const Icon(Icons.call, color: Color(0xFF2563EB), size: 22),
-          onPressed: onCallPressed,
+          onPressed: _launchDialer,
         ),
         PopupMenuButton<String>(
           icon: const Icon(Icons.more_vert),

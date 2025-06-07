@@ -94,12 +94,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
         facilityName: widget.facilityName,
         profilePicture: widget.profilePicture,
         address: "123 Medical Street, City",
-        onCallPressed: () {
-          // Handle call action
-        },
-        // onMenuPressed: () { // Uncomment and use if ChatAppBar has this parameter
-        //   // Handle menu action
-        // },
+        phoneNumber: "+91 90740 26293", // <-- Add the hospital's unique number here
       ),
       body: ChatBackground(
         child: Padding(
