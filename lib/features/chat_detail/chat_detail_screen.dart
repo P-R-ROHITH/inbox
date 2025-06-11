@@ -55,11 +55,34 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
 
   Widget buildStatCard(SpecialMessage msg) {
     if (msg.type == SpecialMessageType.followUp) {
-      return followup.FollowUpCard(
-        doctorName: msg.doctorName,
-        facility: msg.facility,
-        date: msg.followUpDate ?? msg.date,
-        note: "Please book a follow-Up to review your progress",
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              CircleAvatar(
+                radius: 18,
+                backgroundImage: AssetImage("assets/images/doctorprofilepic.png"),
+              ),
+              const SizedBox(width: 10),
+              Text(
+                msg.doctorName,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          followup.FollowUpCard(
+            doctorName: msg.doctorName,
+            profilePicture: "assets/images/doctorprofilepic.png",
+            facility: msg.facility,
+            date: msg.followUpDate ?? msg.date,
+            note: "Please book a follow-Up to review your progress",
+          ),
+        ],
       );
     }
     switch (msg.type) {

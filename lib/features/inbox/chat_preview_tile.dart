@@ -4,12 +4,14 @@ class ChatPreviewTile extends StatelessWidget {
   final String doctorName;
   final String profilePicture;
   final List<String> messages;
+  final String category; // <-- Add this line
 
   const ChatPreviewTile({
     super.key,
     required this.doctorName,
     required this.profilePicture,
     required this.messages,
+    required this.category, // <-- Add this line
   });
 
   @override
@@ -23,7 +25,11 @@ class ChatPreviewTile extends StatelessWidget {
       ),
       title: Text(
         doctorName,
-        style: const TextStyle(fontWeight: FontWeight.bold),
+        style: const TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 15,
+          color: Colors.black, // Or any color you prefer
+        ),
       ),
       subtitle: Text(
         lastMessage,

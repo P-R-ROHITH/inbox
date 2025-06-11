@@ -7,7 +7,9 @@ import 'message_templates.dart';
 
 class ChatList extends StatefulWidget {
   final String category;
-  const ChatList({super.key, required this.category});
+  final String searchQuery; // Add this line
+
+  const ChatList({super.key, required this.category, this.searchQuery = ''});
 
   @override
   State<ChatList> createState() => _ChatListState();
@@ -32,22 +34,31 @@ class _ChatListState extends State<ChatList> {
 
   @override
   Widget build(BuildContext context) {
+    // Filter chats by search query
+    final filteredChats = widget.searchQuery.isEmpty
+        ? chats
+        : chats.where((chat) =>
+            chat.facilityName.toLowerCase().contains(widget.searchQuery.toLowerCase()) ||
+            chat.senderName.toLowerCase().contains(widget.searchQuery.toLowerCase()) ||
+            chat.lastMessage.toLowerCase().contains(widget.searchQuery.toLowerCase())
+          ).toList();
+
     return ListView(
       children: [
         // Show all chat items
         ...List.generate(
-          chats.length,
+          filteredChats.length,
           (index) => Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: ChatItem(
-              facilityName: chats[index].facilityName,
-              senderName: chats[index].senderName,
-              messagePreview: chats[index].lastMessage,
-              date: chats[index].date,
-              time: chats[index].time,
-              unread: chats[index].unread,
-              unreadCount: chats[index].unreadCount,
-              profilePicture: chats[index].profilePicture,
+              facilityName: filteredChats[index].facilityName,
+              senderName: filteredChats[index].senderName,
+              messagePreview: filteredChats[index].lastMessage,
+              date: filteredChats[index].date,
+              time: filteredChats[index].time,
+              unread: filteredChats[index].unread,
+              unreadCount: filteredChats[index].unreadCount,
+              profilePicture: filteredChats[index].profilePicture,
               onOpen: () => markAsRead(index),
             ),
           ),

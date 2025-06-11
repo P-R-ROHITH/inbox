@@ -77,38 +77,30 @@ class _ConsultationChatMessageState extends State<ConsultationChatMessage> {
                 const SizedBox(height: 8),
                 Align(
                   alignment: Alignment.centerRight,
-                  child: GestureDetector(
-                    onTapDown: _onTapDown,
-                    onTapUp: (details) {
-                      _onTapUp(details);
-                      widget.onButtonPressed();
-                    },
-                    onTapCancel: _onTapCancel,
-                    child: AnimatedScale(
-                      scale: _scale,
-                      duration: const Duration(milliseconds: 100),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(18),
-                          gradient: const LinearGradient(
-                            colors: [Color(0xFF7B61FF), Color(0xFFE15BBA)],
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.08),
-                              blurRadius: 4,
-                              offset: const Offset(0, 2),
-                            ),
-                          ],
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFF7B61FF), Color(0xFFE15BBA)],
+                      ),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: TextButton(
+                      onPressed: widget.onButtonPressed,
+                      style: TextButton.styleFrom(
+                        minimumSize: const Size(64, 28),
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                        child: Text(
-                          widget.buttonText,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 17,
-                          ),
+                      ),
+                      child: Text(
+                        widget.buttonText,
+                        style: const TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
                         ),
                       ),
                     ),

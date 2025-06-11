@@ -45,7 +45,7 @@ class _FollowUpPageState extends State<FollowUpPage> {
                       ],
                     ),
                   ),
-                  // Date (top right)
+                  // Date and badge
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
@@ -59,7 +59,6 @@ class _FollowUpPageState extends State<FollowUpPage> {
                         ),
                       ),
                       const SizedBox(height: 4),
-                      // "IN 3 DAYS" badge
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                         decoration: BoxDecoration(
@@ -86,6 +85,7 @@ class _FollowUpPageState extends State<FollowUpPage> {
               // Stat Card
               FollowUpCard(
                 doctorName: "Dr. Anupama Jr",
+                profilePicture: 'assets/images/doctorprofilepic.png', // <-- Add this line
                 facility: "Sunrise Medical Center",
                 date: "24th June 2025",
                 note: "Please book a follow-Up to review your progress",
@@ -100,6 +100,7 @@ class _FollowUpPageState extends State<FollowUpPage> {
 
 class FollowUpCard extends StatefulWidget {
   final String doctorName;
+  final String profilePicture; // Add this line
   final String facility;
   final String date;
   final String note;
@@ -107,6 +108,7 @@ class FollowUpCard extends StatefulWidget {
   const FollowUpCard({
     super.key,
     required this.doctorName,
+    required this.profilePicture, // Add this line
     required this.facility,
     required this.date,
     required this.note,
@@ -214,16 +216,23 @@ class _FollowUpCardState extends State<FollowUpCard> {
             const SizedBox(height: 12),
             // Sent securely by doctor
             Row(
-              children: const [
-                Icon(Icons.check_circle, color: Color(0xFF2563EB), size: 14),
-                SizedBox(width: 6),
-                Text(
+              children: [
+                const Icon(Icons.check_circle, color: Color(0xFF2563EB), size: 14),
+                const SizedBox(width: 6),
+                const Text(
                   "Sent securely by doctor",
                   style: TextStyle(
                     color: Color(0xFF2563EB),
                     fontWeight: FontWeight.w500,
                     fontSize: 12,
                   ),
+                ),
+                const Spacer(),
+                IconButton(
+                  icon: const Icon(Icons.chevron_right, color: Color(0xFF2563EB)),
+                  onPressed: () {
+                    // TODO: Add your navigation or action here
+                  },
                 ),
               ],
             ),
@@ -371,16 +380,23 @@ class _FollowUpCardState extends State<FollowUpCard> {
             const SizedBox(height: 12),
             // Sent securely by doctor
             Row(
-              children: const [
-                Icon(Icons.check_circle, color: Color(0xFF2563EB), size: 14),
-                SizedBox(width: 6),
-                Text(
+              children: [
+                const Icon(Icons.check_circle, color: Color(0xFF2563EB), size: 14),
+                const SizedBox(width: 6),
+                const Text(
                   "Sent securely by doctor",
                   style: TextStyle(
                     color: Color(0xFF2563EB),
                     fontWeight: FontWeight.w500,
                     fontSize: 12,
                   ),
+                ),
+                const Spacer(),
+                IconButton(
+                  icon: const Icon(Icons.chevron_right, color: Color(0xFF2563EB)),
+                  onPressed: () {
+                    // TODO: Add your navigation or action here
+                  },
                 ),
               ],
             ),
@@ -517,60 +533,70 @@ class _FollowUpCardState extends State<FollowUpCard> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              TextButton(
-                onPressed: () {
-                  setState(() {
-                    dismissed = true; // <-- Set dismissed to true
-                  });
-                },
-                style: TextButton.styleFrom(
-                  foregroundColor: const Color(0xFF2563EB),
-                  textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
-                ),
-                child: const Text("Dismiss"),
-              ),
-              const SizedBox(width: 10),
-              ElevatedButton(
-                onPressed: isBooking
-                    ? null
-                    : () async {
-                        setState(() {
-                          isBooking = true;
-                        });
-                        await showSuccessAnimation(context);
-                        await Future.delayed(const Duration(milliseconds: 400));
-                        setState(() {
-                          isBooking = false;
-                          booked = true;
-                        });
-                      },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF2563EB),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(14),
+              if (!booked && !dismissed) ...[
+                TextButton(
+                  onPressed: () {
+                    setState(() {
+                      dismissed = true;
+                    });
+                  },
+                  style: TextButton.styleFrom(
+                    foregroundColor: const Color(0xFF2563EB),
+                    textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
                   ),
-                  elevation: 0,
-                  minimumSize: const Size(60, 28),
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                  child: const Text("Dismiss"),
                 ),
-                child: isBooking
-                    ? const SizedBox(
-                        width: 16,
-                        height: 16,
-                        child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                          strokeWidth: 2,
+                const SizedBox(width: 10),
+                ElevatedButton(
+                  onPressed: isBooking
+                      ? null
+                      : () async {
+                          setState(() {
+                            isBooking = true;
+                          });
+                          await showSuccessAnimation(context);
+                          await Future.delayed(const Duration(milliseconds: 400));
+                          setState(() {
+                            isBooking = false;
+                            booked = true;
+                          });
+                        },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF2563EB),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                    elevation: 0,
+                    minimumSize: const Size(60, 28),
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                  ),
+                  child: isBooking
+                      ? const SizedBox(
+                          width: 16,
+                          height: 16,
+                          child: CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                            strokeWidth: 2,
+                          ),
+                        )
+                      : const Text(
+                          "Book",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                          ),
                         ),
-                      )
-                    : const Text(
-                        "Book",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                        ),
-                      ),
-              ),
+                ),
+              ],
+              if (booked || dismissed) ...[
+                IconButton(
+                  icon: const Icon(Icons.chevron_right, color: Color(0xFF2563EB)),
+                  onPressed: () {
+                    // TODO: Add your navigation or action here
+                  },
+                ),
+              ],
             ],
           ),
         ],
