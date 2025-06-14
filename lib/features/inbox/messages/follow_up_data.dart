@@ -6,6 +6,9 @@ class FollowUpData {
   final String bookingId;
   final String facilityName;
   final String facilityAddress;
+  final String token;
+  final String time;
+  final String paymentMode;
 
   FollowUpData({
     required this.doctorName,
@@ -15,5 +18,8 @@ class FollowUpData {
     required this.bookingId,
     required this.facilityName,
     required this.facilityAddress,
+    required this.token,
+    required this.time,
+    required this.paymentMode,
   });
 }

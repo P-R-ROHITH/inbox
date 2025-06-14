@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:inbox/features/inbox/messages/follow_up_detail_page.dart';
+import 'package:inbox/features/inbox/messages/cancelled%20follow_up_detail_page.dart';
+import 'package:inbox/features/inbox/messages/booked_follow_up_detail_page.dart';
 import 'package:lottie/lottie.dart';
 import 'package:inbox/features/inbox/messages/follow_up_data.dart';
 
@@ -127,14 +128,18 @@ class _FollowUpCardState extends State<FollowUpCard> {
   bool dismissed = false; // <-- Add this
 
   Future<FollowUpData> fetchFollowUpData() async {
+    // Replace with your backend call if needed
     return FollowUpData(
       doctorName: widget.doctorName,
       doctorProfilePic: widget.profilePicture,
-      paymentStatus: "Unpaid",
+      paymentStatus: "Paid",
       date: widget.date,
       bookingId: "1235556677",
       facilityName: widget.facility,
       facilityAddress: "123 Health st, Springfield",
+      token: "12",
+      time: "10:00AM",
+      paymentMode: "Online - UPI",
     );
   }
 
@@ -414,8 +419,14 @@ class _FollowUpCardState extends State<FollowUpCard> {
                 const Spacer(),
                 IconButton(
                   icon: const Icon(Icons.chevron_right, color: Color(0xFF2563EB)),
-                  onPressed: () {
-                    // TODO: Add your navigation or action here
+                  onPressed: () async {
+                    final followUpData = await fetchFollowUpData(); // See below
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => BookedFollowUpDetailPage(data: followUpData),
+                      ),
+                    );
                   },
                 ),
               ],

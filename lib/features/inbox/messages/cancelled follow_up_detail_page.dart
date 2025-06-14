@@ -45,20 +45,44 @@ class FollowUpDetailPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            Row(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Icon(Icons.cancel, color: Colors.red),
-                const SizedBox(width: 8),
-                Text(
-                  data.paymentStatus,
-                  style: const TextStyle(color: Colors.red, fontWeight: FontWeight.w600),
-                ),
-                const SizedBox(width: 24),
-                const Icon(Icons.calendar_today, color: Colors.blue),
-                const SizedBox(width: 8),
-                Text(
-                  data.date,
-                  style: const TextStyle(fontWeight: FontWeight.w600),
+                if (data.paymentStatus == "Paid")
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.check_circle, color: Colors.green),
+                      const SizedBox(width: 8),
+                      const Text(
+                        "Paid",
+                        style: TextStyle(color: Colors.green, fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  )
+                else
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.cancel, color: Colors.red),
+                      const SizedBox(width: 8),
+                      const Text(
+                        "Unpaid",
+                        style: TextStyle(color: Colors.red, fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
+                const SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.calendar_today, color: Colors.blue),
+                    const SizedBox(width: 8),
+                    Text(
+                      data.date,
+                      style: const TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -114,7 +138,10 @@ class FollowUpDetailPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      child: const Text("Re- Book Follow Up"),
+                      child: const Text(
+                        "Re- Book Follow Up",
+                        style: TextStyle(color: Colors.white), // Make text white
+                      ),
                     ),
                   ),
                 ],
