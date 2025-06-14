@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:inbox/features/inbox/messages/follow_up_detail_page.dart';
 import 'package:lottie/lottie.dart';
+import 'package:inbox/features/inbox/messages/follow_up_data.dart';
 
 class FollowUpPage extends StatefulWidget {
   const FollowUpPage({super.key});
@@ -124,6 +126,18 @@ class _FollowUpCardState extends State<FollowUpCard> {
   bool isVisible = true;
   bool dismissed = false; // <-- Add this
 
+  Future<FollowUpData> fetchFollowUpData() async {
+    return FollowUpData(
+      doctorName: widget.doctorName,
+      doctorProfilePic: widget.profilePicture,
+      paymentStatus: "Unpaid",
+      date: widget.date,
+      bookingId: "1235556677",
+      facilityName: widget.facility,
+      facilityAddress: "123 Health st, Springfield",
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final double maxWidth = MediaQuery.of(context).size.width * 0.8; // 8/10th of screen
@@ -230,8 +244,14 @@ class _FollowUpCardState extends State<FollowUpCard> {
                 const Spacer(),
                 IconButton(
                   icon: const Icon(Icons.chevron_right, color: Color(0xFF2563EB)),
-                  onPressed: () {
-                    // TODO: Add your navigation or action here
+                  onPressed: () async {
+                    final followUpData = await fetchFollowUpData();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => FollowUpDetailPage(data: followUpData),
+                      ),
+                    );
                   },
                 ),
               ],
